@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="会议时间：2020-3-24上午10点会议地点：电话会议与会人员：汉高：Ellen, Jane, Fred, Samuel;   翌可：Jim, 方骥会议主题：描述性分析后续补充以及特征因子讨论  第一部分主要由方骥代表翌可公司介绍了描述性分析几项补充结果，包括：  主管与下属年龄差的对比分析 薪资水平的区间分布对比 各年的离职率变化情况  针对这部分内容，汉高方面反馈了以下一些补充和修改意见：">
+<meta name="description" content="内容提要：3月24日电话会议的内容纪要。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="20200324会议纪要">
 <meta property="og:url" content="http://yoursite.com/2020/03/25/20200324_meeting_summary/index.html">
 <meta property="og:site_name" content="Henkel离职率分析项目文档">
-<meta property="og:description" content="会议时间：2020-3-24上午10点会议地点：电话会议与会人员：汉高：Ellen, Jane, Fred, Samuel;   翌可：Jim, 方骥会议主题：描述性分析后续补充以及特征因子讨论  第一部分主要由方骥代表翌可公司介绍了描述性分析几项补充结果，包括：  主管与下属年龄差的对比分析 薪资水平的区间分布对比 各年的离职率变化情况  针对这部分内容，汉高方面反馈了以下一些补充和修改意见：">
+<meta property="og:description" content="内容提要：3月24日电话会议的内容纪要。">
 <meta property="article:published_time" content="2020-03-25T08:20:00.000Z">
-<meta property="article:modified_time" content="2020-03-25T09:39:51.797Z">
+<meta property="article:modified_time" content="2020-03-25T11:39:01.572Z">
 <meta property="article:author" content="chrisfang">
 <meta name="twitter:card" content="summary">
 
@@ -330,60 +330,15 @@
       
 
       
-        <blockquote>
-<p>会议时间：2020-3-24上午10点<br>会议地点：电话会议<br>与会人员：汉高：Ellen, Jane, Fred, Samuel;   翌可：Jim, 方骥<br>会议主题：描述性分析后续补充以及特征因子讨论</p>
-</blockquote>
-<h1 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h1><p>主要由方骥代表翌可公司介绍了描述性分析几项补充结果，包括：</p>
-<ul>
-<li>主管与下属年龄差的对比分析</li>
-<li>薪资水平的区间分布对比</li>
-<li>各年的离职率变化情况</li>
-</ul>
-<p>针对这部分内容，汉高方面反馈了以下一些补充和修改意见：</p>
-<ul>
-<li>增加主管下属人数的字段，并进行相关分析</li>
-<li>主管与下属年龄差的分档重新进行调整，建议采用<code>0-3</code>、<code>3-6</code>、<code>6-10</code>、<code>10-15</code>、<code>15-20</code>、<code>20-25</code>、<code>25-30</code>、<code>30以上</code>这几档</li>
-<li>薪资水平按不同BU和不同员工职级（<code>Job Class</code>）进行细分后再进行分析</li>
-<li>请假次数增加3个月内和6个月内的统计字段</li>
-<li>增加下属离职率的描述性分析</li>
-<li>增加主管所在地的信息字段，并进行相关分析</li>
-<li>增加员工奖励次数（Award payment）的信息字段，并进行相关分析</li>
-<li>增加主管司内工龄字段，结合主管绩效进行相关分析</li>
-</ul>
-<h1 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h1><p>结合上面的部分，双方讨论了后续需要补充和更新的数据，主要包括以下这些：</p>
-<ul>
-<li>主管个人信息补充</li>
-<li>主管所在地信息</li>
-<li>主管潜力值</li>
-<li>家庭住址和工作地址的补充更新</li>
-<li>个人工作经历</li>
-<li>个人教育背景</li>
-<li>2016-2017年请假数据</li>
-<li>2019年最新的换岗数据</li>
-<li>员工奖励次数（Award payment）相关记录</li>
-<li>需要进行深度分析的BU分类方法</li>
-</ul>
-<h1 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h1><p>主要由方骥代表翌可公司介绍了特征工程中获取到的重要影响因子，TOP10如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DaysFromSalaryChange：距离上次加薪天数</span><br><span class="line">LeaveDays：近一年请假天数</span><br><span class="line">BU_ExitRate：区分BU的离职率</span><br><span class="line">TeamTurnoverOfManager：主管所在团队的离职率</span><br><span class="line">MonthsAtCompany：司内工龄</span><br><span class="line">JobHierarchy：薪资职级</span><br><span class="line">DaysInCurrPosition：换岗至今天数</span><br><span class="line">SalaryIncrease：最近一年调薪幅度</span><br><span class="line">TotalPositionChangeFrequency：历史至今换岗次数</span><br><span class="line">TotalWorkingMonths：社会工龄</span><br></pre></td></tr></table></figure>
-<p>再根据这些因子进行组合，得到其中比较重要的组合因子包括：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DaysFromSalaryChange &amp; LeaveDays</span><br><span class="line">BU_ExitRate &amp; TotalPositionChangeFrequency</span><br><span class="line">LeaveDays &amp; JobHierarchy</span><br><span class="line">DaysFromSalaryChange &amp; JobHierarchy</span><br><span class="line">DaysInCurrPosition &amp; TotalPositionChangeFrequency</span><br><span class="line">BU_ExitRate &amp; TeamTurnoverOfManager</span><br><span class="line">TotalPositionChangeFrequency &amp; TotalWorkingMonths</span><br></pre></td></tr></table></figure>
-<p>汉高方面结合业务方面的考虑，建议增加以下一些组合因子的观察分析：</p>
-<ul>
-<li>司内工龄 &amp; 距离上次晋升天数</li>
-<li>司内工龄 &amp; 最近一年的加薪幅度</li>
-<li>主管司内工龄 &amp; 主管绩效</li>
-<li>所属年代（70后、80后） &amp; 跳槽次数</li>
-<li>性别 &amp; 通勤距离 &amp; 子女人数</li>
-<li>年龄 &amp; 性别 &amp; MC Level &amp; 主管绩效</li>
-<li>下属人数 &amp; BU &amp; 主管绩效</li>
-<li>历史换岗次数 &amp; BU &amp; 主管薪资职级</li>
-<li>薪资职级 &amp; 其他因子</li>
-<li>司内工龄 &amp; 其他因子</li>
-<li>职位类型 &amp; 薪资职级 &amp; 同级调薪幅度</li>
-<li>薪资水平 &amp; 同级调薪幅度</li>
-</ul>
-<h1 id="第四部分"><a href="#第四部分" class="headerlink" title="第四部分"></a>第四部分</h1><p>汉高方面计划两周时间内提供相关数据的补充，并计划在4月9日进行下一次会议。</p>
-
+        <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">请输入密码</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="4b4acb72d37c13d8382bf3a421f8892c61c7df8e0bd9772e98e482b7004a9bda">b6badecba639e16d3955942848bbade8b8b72d8c2806e10738d2a4a12af5b39f0c5d1346c55f95d485fa05ac925491f5d006ceebad405e4f903ee5d73c4a9cc417308060bc69ee6037e605770c4b078184ba103a832457a469f9296bb7356dda6134c05c024b84fd2a6fa9e328b0a0e94bdeb8e8bcde70aa8f947835b8cad793126e9c51c486f293b42fe02699ba0e6e8c8b1136a9fb431c9f9859a4f51bc2b402d9b360235e47b5220a199f3600e5c1c045d84d49736471bbb82b722c56eaf53cd142f8219f1139c80675fc67db70d86924c649ebf197d9bfe2118edef57aa7e2b05ec780c8b6e793ce9ef3528578147b1d5ab0b99c86d49a31edef66243da3b93da8e4fed50f418c5415d5470553e61a02a0cb4f180e601a9af795b3d43882401a4fc1fc6baf3c931e40db78e1068791a83f382447cf27f52480ec554b876679a9b0039bf59d885d329e3574d561738ded19d353b7c6b99d87832e99b6232bea1991eae0a2504cef0b64295e236c98021e9a580ca1005f66b8ddc06753d2a7362cd0732e2201b3e3326a8538e7721f5eb20670bc60f2e7973864a97c03233214b4e84d61e93093cca8fa37c8edc11094d8bc059c2eee0f3c6fac8e10ceada0bee4c71f284f6ff0efc7056367968bdfa583f487bfe5c018b635ab75dcbb380a7a2b228c38ad5bd9d315034465ec115f19f0561c55331844e9e1479fbcc0aa77e67835ef6d2300562ca68f2f09b5b045645b80edede9cfded5308ffa536339b315928fe8de731f933a94c4932b8d228f6cf600556b705beab3a780eb7712087dd7fcf0e628391ba878c9c9d3684d87fd8426efeee2e6e73d296c27ec4e1adfa00825433cb7252c123e7d369b1223383a45b5bac2c7bd1aa95b81bdaacc2683c746636b8680cab7a438eab9d1bd2eed420851396955c072a97e827dac92938161d1b2ef05c82f591ae0c961bf613100fce45e53a382c33b5738f4e7863afd3952b3f107418b863dd40e7868a3f264decf079d58bc3f16afaf2dc0eea4d1c99b0d98c48bf735fadeb6ce422151b27f4347f0e208a680ab6f73bb0c80a4160ff5e394ed3ce8203a162a2e42e32f6f643d4d4183e46981c52bb03077292a2904a00af1f008c94bf313af7bcb4adaeecfebece682f253d692e32b908aa07028193c27ff4dbbf8ea4f4ed908f98cfb9fbd54c0ee95ad326edef0d71c7489c35895ea87f2a964acb7da8a15a0baa56c44f7272f405e964d4f041b3da70637c3129c970f59d64ce52651f4a0c4783a674c1f65bf5e85fd9a576636a59d4d39c8aa062bebc396776b6aa9e8a9318b86ebe1e26ce0f87b5ebe167fb1646ca368bb3ffaeddd681811c14610fcbf5774698be6c91c52da1a311684fe2ec19fa8e76f540d4096a68db0c4306ea197191b6dd13e1dfb3aa92652bbe58aa0f265a1237b00b06c8b48a559f43f1063f3e02c5cf6829a13b44084d7edbfd1a3c2b03e0a9c9a09036f1d40dba1d5d87289c20672b9181bf8c697c87412b034db7b41daaf2f00d2ea527ddfae546bc9671f198e40cf81af2bfbc51b35012b555bf0d54a911a3d3912e43aca4da86b9f39278aeccaa79fe0db12a7c09f24414084a912a2e631267ffe0f562890c8e9a247ab56806109c62195945a14b0203cbb865d368b909aa9e154d52ea3212b1c509dd0349deac3f9965400fe41564d06ab5a683ba7137237e439a425258cd369c1474c63a8e5c113a3968e60fa9e94477ac00e8677d2b09e114aba0034a8474450f9d50bdbea1b59813be7bac8e9fe7b9a94f1b57710a18e634a18127bcbe848f2160b7bef87db67b7768ff43dc8e4dfb2abaea7df2fc1b92dfe9ce2ba81957d44d72ecd9b9a18575269a4b7e98e8e6197c2769bba4e804e4cb06b490e49dba473529591c9cd793afdc5d0cc2d1ad14dd85b46a9db125189e47b51826c2b699c418c4484e42b29bc186d89537a18a88735623c21d0b1b8f694ee4aaf662d8aae3928b9f259e3669ae35ae25e1f01e6b7f49ef3c1c1a332d189bf890ea220f5e089dab690110b34bd07cecd07064de89907fbc40b301bbca46a4e6a3e1929d6f26c502ff12778613caab8919a76482f15697e4355b77c1450166db697d808ca47f34c580655319ad826777d6a7025748d3477dbe90922e08d8a3adbae7f204538e16b9943239efea2773274766133abe9c23eb620918656b751312564dd83319abead564486482516ad059c30e35a358b465df4aa07fca2f508a0159347245359f123c094ddb35f80700dffffe8b63eb44b8aa004078a85781dc13b6fa0f5db5734367d9c6aaf8c17826089ebfea9221b757a9f579235ee585afe99d236615ac45a74bd229dc93ce2c9484d5b5402c97529756105d8e1e0f8348eed353f33439575278516b46e4b38c63d450c2a303da59e385180f9088312150ea3dff3bbe5d1f0248bf29839b0b233fa5b654440af28a35654afcdc2e0c06791309e59a534b873fffb5adda07204fb4b71eaee2814f0ff972bee8b30b57a1b6c24d749a2de8093ebf9e936acf07825339895abdb87aac9ccc2c0a92c260c5d8495c39e112da4f6cd601e9f467554930d649303d3f07b86f1da5f4485efb7549a3405de756cfc6e3ca1373fdfc50546fb3cbc343f2ac753353d5888a0e6e135ef01dca5a700b0bb6a42be87e9f27e7b7e88b7b54ec83f9a4d3a6cfc04b7b6dfa820317bf9e7d3441dee9d6924687670365ea5219bff18afcd59d57aae8be55fae7f817e6898b2256e7091acec03c2fecd0a9c49fbe5b758056e79937ba384d682e5f9dfb78cb30042b68b0cc77063a31cc6b88e45f7cbc247f0f409ec2908a2822fdafc4869f7066f70fe3851f1a6d5380c98e41ca9d47bb6d565fc114ecfadc6bc694996413f446fcf4a82595a34ec7313bc08ceeb030a41771c26c00d2684562050c0337cd6e4b3fc6a0c6eb5ea160021b21bbcbfbc1204ef4b2943226460088f98a36761ccb89acbe15c78d45b58147a2b6d74b1458fbc2b9f7a9a74313981bf82f7e739fda2b630226c0073bf5d1a282b2dd102403065ebf6c9315c24854ef926b7c9204a647e17a323b2dc8b81e71c0f5f6f236ffa538675367ec63ba68b6af63698bde2aacab24be59d9ebec8df0268bec5d47e3fc3f17fc96fa28c9e0c5b0b3b7b1da6af04e97b3deb60455ea8d87e50ce221335a93a17180b730372c781e477eb2413648490dfd75ce8e7891331a9730cfa8e6360c079512f02804452ca849a0134ce21595350459225ea28198880eeeb3cc3339c2491e81dc412f3931c02915ba2f8d7a79208e272758778142e0c129ff5e981453206f2e5a3f59d3e2809e9c40c9d4cd82effd5a51dbdfe10cfe38d1d067b7fd41a4384244e9af242671b63356409ea4d9b685b2797a9dcf647519783c1c0ba9ebb3d63e98932e5efe66d051bc910272cd7ec8f9f07adbff68074ac5a5f94ac056ac025ee62c34df6f02e7e346cb2d4fef09298b5da704ece087f631ab3893424ec7cacd82b6cc23006decd26d8b6302924229eefe4ceb7c1ac083bfae24860528c22d04f4d46e7e8eae7e25b76821925bf4055810cdc35588b676ce59f481a430aa1dc074c1f3fcf2fcfcbd06bea21f31b079c3d1c2ecf9575d5b1f6c9a54de50047f8d8fc619d35b025e2cc1fdcc73555f7236001032d3080927fe43476d5ddcff0d45ea888c0efda9887354586e72e15e70146fe7bb75b504d679ee187d6a934166a0bf782fb01c6886f9e4291456fbfd7d9db1b6fe721d4b1bf557836768f0878e0a1ca6fa5846fc707c4cb919a10c51eea86d82377d36cd10b77995d7b7c1e134df4d0a8d0c79c00d0c6d6496ae252507c49c136417ab3cffccbe019d4ba6d34a05cf859dd2a5e77a9366cf2c574e7d77cd03466a5677f7c4997af2202808a7f1b6c9858ef9c9a4927c131ad7913e4b61742deea4aae8166880f420346aceacd8612d24828372ca351427ceab32a2cc7492248c1c005e91f972f5c0d237bece67a550a4215a390f8909e609873b967aba3105cd116c1dc1dcd65a264be23e26ca1df0c365a5b03cb06cbc471aec0e918e2d7bec6bd383e72540e311ed0aa8d0b3b03826e3c777933673ebe9be759cff1429e3c0139a8d3ee3cc61605d7ea99f5c913417ea63367adcaa098531eb585aaa93092caed1b6e204ba0ea0557ac32e2dcf096de7a0646360156449b3b750c9e758ede3e532525f0be459036e6e90b6ee39bb1814a331318bbee3c752c2ca4238d81a4da5c2cc7c02ebc5b31160315399a3bac976ba9e5893cb441abe3faa395e682f0043f2481890a520ad5951b40077e6263117a6c01ed22cd338de75b59ec18aa4ece228e4dc50990ab26656b329497163d3be9d532c0ac11f2470ac5e18427f39be7566a3afaf310a358e4d6f2ac3b66ea86e7e8d4de76e9912012213ec200ed4121d81574cd0bec0deda3464d2646aba955470eb4e8db53c277cf6a3b81dc0c22eadb317c5062902bab9700283ee0ae7cff6aa65b62614afb6b892f6d6bdb4585b52c17a266d8982ed15337b260f5c037746dd6a17cc93b54e665e03cae9a848842eee1c04f23386904b5658a366523e212724473a881b620f60e368cbe51400a56d6fbb5dc580f040919c8ec7bc4cf1e1ed1ce3b85a4eaa86f1510d1fb5a6f92ab09672afffd1cc428788af839e2af000dd3826919257c794d0cf5e5b197d41b517cee0991356fb8f5445e6e6ff3c18d180e34fbc6a5b40824fe038c00fd21ef8a03054f7870bebdd422808b0ca086a22cd614d148663fb978fcbcff6a270d976d23554cbad489efa7b4c823e95dbea961d0aae4cf0ad7cdb6899ae55087b29081482f3fca97ce12ccaec0eece6f7dcae37f97f93a07ec8a874318e3daa4aa21cd07a835812dfa2d35b6c6d2db3fac7f6f9dda74852c7806d38bec1ea9de6a042da62a91fc854a0f6f71bd463d350eef48c9926a657ceed6b234f36f77db7ee44984fadfaabc3c17bb92b58c11375039e8f327a37e5ea2b0cb477a30ef35a1bdd316831b56a956941a0234d00b05b786292084685941669f1be5dd7b1838e4963a41d1018e8e698e0e8b3820586b8ef64231b7a934394f7caca6a4682ef19ef314891aa22a3ef29a252d777950497a204c0fec17ca19affd68e1217c9fcb6abce3f71e9f55dffec24f8d25cdaf78c8b2803b7747e9edb3155c797cac81a7050437cf8d241844d30c7273a18942d8f34ae1fe400446d457734b8daf6b8e27330cecd5383d95d0373cb2aa577fa56f88e3bd4713210a6ff8a831a2105efb34af0958df4395773cba80abe2f592e29c7de390efa68efb3dc56067ee24b7b4d143c6b75982f9b8b4c845441bc5c329cf8d320126f4b2e7333080ebbf9665725f6641b1919ca121c3641735e2d9afee5a1369c80717d3261038966f4611a6c2aef7934d346e2b691967731d406f84600d752a847c508aa9fbd6320036924ae063d53a63858b6a0612ec75b045f632efbc923a3de51644cc3adc2dc0d0f9592aafa09b1afed735b8006a0fc6bd6b3dbc75aa527b8b0045558a53be925708da1fac51ecb7e9a4ce417459a26791c5fc68f228b6a0154046ca3e50a31c05b7ebb80a208c47225a0d44cbd45a7bb296ea37d5409b48855d5c0060c0a87657fe0a3342559991e61c21f7d12666b90b2c7793d18ee6a17de81f601ad00d69a8e6a10c20d9f1dc6a250cd3ace20d4c2334e5a4271b273d94d1530fe1be0380cbb27a8c796c53d4dc5e3ccd49b00524e223c32bb0f9b7d27ba986781eb68cdeeedcb27880823befa09cfb44104d434e587ae27c3973e457734d29ca87aee45ecbe3327d6b5fc7ea5f0452a299d0655582a03d387852d77e56daff09fa7ec07d4d4d9d12fba034c6a38cc9de4ed0d935e8d5e116b4182961dd6d822c4f643b8a35cc03612c4153447536024018844de50c83447b4a004d570428d2494b431766ecc1d4d162ecfa68a0de9853f652f819d7a0f2cf40fa50e05a2611fc428caf8239c0ca5c07f21996bbc7d5c3908ff5cf8814df1daa6a61d516c1808ecf4bdd919fb65b93876dc081efe978f8760700534ede2e71ddc72ffdbe5f5fd600856e0fef7dd2f788321b1df19733116b988fe98b544a1f5d6dc15f1c254a3cdc7b8f1c568cdc982b2820763ab94ff83259e11a578b05c1aa34d598f2889cb2328d2077e9fcceca627befc8ea00dbc232d804beeeae00db961545658be1b0a61b8856e03f5eb4e8365743e47d1d17fdb9b66cbb87f4d10a4f7de5d4d6ce9e2e28f55e356cd925dcbbfcb58ed2b8767ed24b579f63fa0fe7a30f58475fc20c447dba51e8e117beee1f768cfc90c5f01d837c3a75022e193dd3111398a5be9dddeddf881022a6c3235745aba6fad80c9b94feb8a4a595ba2ca1a9c9b0d82e89988c6e60ed844733c973ae8e1af95ada5997ed9d510cfd80212256405c83a1f96d7d53f79de43ed7c7e10cc2ded9299e69949c2e689de65db7987f4372162382de27f224db78e9a7d608bc5f7f43a25c261f092e29cf081083e970aa0c47781389974bede452000cdb3b65c3a31ed0538a10a8eb5697aae8c65ac1acd6ccfae357dd6862abb01ca9936b334f8071ba22427693fb5a07e5b602887ccea1b1cd6cedafb12449c24219a742c115ba409e7eb2aee7871ad146c8a9eeebb8f800bce5ffd8a90cf1ead12e3157f8185a405663b553b27196135743633d885b53d7f444c651728849d197f965afc72914a5caaed539aacf9ebd9e4d6f9b7fe663362de21ae9d7515fccded4b1f9050ee0076f5da13bab413faaf5c7517fbd2fd1ecc94f9aa2ff2d2c1335175cfab51404b74f82030814ecdfdb54df3beb689c01b8a18f7f24aa70d8bd458ee58901bc5b0f201a29fab880790f806c26650e8b6852d756f36a586382f66a9d9232877cede7fbdb4ac1747fb660a166c78357208212a95154b6e74b80f28c9cc35150a4c30e53de404e9bc989c35966c941dd61c32ef289aaeb0d5b9904d09d1801fd0c34293990976f5f6cd8c474ac77ecef63fc608da1cb8084cc98a4c56e7786f9c46a50c909b1940678f4ee28ec61b43d677f3e630df24b75a7aa6269d6d998a20d313fddf5e325406c253ddc3e2e7f55f347177726cf6aa2e953317dc9751484be319d4dc5304cbfe48e1543f7222e8546da72cb6d4bfa1f351fd54c22c4f6c9fb5283dbf1bf859bf975e81c68683f090ffa8aae5544329823aa32d4fdd8ad869dea4cdea00177022b592d3399c5f234aec5ed98553266d3b1a654ebd0251e6af09c34febb154a551b8e781875c35f3a6335e3d0ead89a7f585cb8b4990d15f17427a2617d4110a1935af29471bb14fd2c4117fe28c4e8af8c4b6b85754a57cf3dc407c44e0f6eb13ceb47d5e6e77712fb4a226482e2a81f5530063952e999172ef116ef6fb366f5304a56ef75c82a913e83a0df0031b06ec51acbf26fca428240f2bb81028251470d42cb0135799ccc1bf4eacb95efd3101489b0d2ea34cfa845d6fbf53820e0f532c78f2cccb792221a723f5bf1ad9d6f99d5395e3c40b76a26226c3bccca15e6d2a9abc5946da865cb21ad8ade</script>
+</div>
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
       
     </div>
     
@@ -467,17 +422,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -537,22 +483,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分"><span class="nav-number">1.</span> <span class="nav-text">第一部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二部分"><span class="nav-number">2.</span> <span class="nav-text">第二部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三部分"><span class="nav-number">3.</span> <span class="nav-text">第三部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四部分"><span class="nav-number">4.</span> <span class="nav-text">第四部分</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
