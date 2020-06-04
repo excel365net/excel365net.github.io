@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="清洗,特征工程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="自4月24日收集到最终版的数据集之后，开始进行数据建模分析，其中的具体过程记录如下。 1. 原始数据集及缺失分析1.1 导入数据12345678910111213#读取数据import pandas as pdimport numpy as nphr_data &#x3D; pd.read_csv(&#39;D:&#x2F;XXX&#x2F;hr_data1.csv&#39;,engine&#x3D;&#39;python&#39;) #指定列名hr_data.col">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据建模分析过程记录">
+<meta property="og:url" content="http://yoursite.com/2020/04/28/record_of_data_modeling_analysis/index.html">
+<meta property="og:site_name" content="Henkel离职率分析项目文档">
+<meta property="og:description" content="自4月24日收集到最终版的数据集之后，开始进行数据建模分析，其中的具体过程记录如下。 1. 原始数据集及缺失分析1.1 导入数据12345678910111213#读取数据import pandas as pdimport numpy as nphr_data &#x3D; pd.read_csv(&#39;D:&#x2F;XXX&#x2F;hr_data1.csv&#39;,engine&#x3D;&#39;python&#39;) #指定列名hr_data.col">
+<meta property="article:published_time" content="2020-04-27T20:13:00.000Z">
+<meta property="article:modified_time" content="2020-04-28T00:08:12.199Z">
+<meta property="article:author" content="chrisfang">
+<meta property="article:tag" content="清洗">
+<meta property="article:tag" content="特征工程">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/28/record_of_data_modeling_analysis/"/>
+
+
+
+
+
+  <title>数据建模分析过程记录 | Henkel离职率分析项目文档</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henkel离职率分析项目文档</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/record_of_data_modeling_analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chrisfang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henkel离职率分析项目文档">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据建模分析过程记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T04:13:00+08:00">
+                2020-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E6%96%BD%E8%BF%87%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">实施过程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自4月24日收集到最终版的数据集之后，开始进行数据建模分析，其中的具体过程记录如下。</p>
+<h1 id="1-原始数据集及缺失分析"><a href="#1-原始数据集及缺失分析" class="headerlink" title="1. 原始数据集及缺失分析"></a>1. 原始数据集及缺失分析</h1><h2 id="1-1-导入数据"><a href="#1-1-导入数据" class="headerlink" title="1.1 导入数据"></a>1.1 导入数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取数据</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">hr_data = pd.read_csv(<span class="string">'D:/XXX/hr_data1.csv'</span>,engine=<span class="string">'python'</span>) </span><br><span class="line"><span class="comment">#指定列名</span></span><br><span class="line">hr_data.columns = [<span class="string">'EmployeeNumber'</span>,<span class="string">'BU'</span>,<span class="string">'Org'</span>,<span class="string">'JobLevel'</span>,<span class="string">'JobClass'</span>,<span class="string">'JobHierarchy'</span>,<span class="string">'JobPosition'</span>,</span><br><span class="line"><span class="string">'Gender'</span>,<span class="string">'Birthday'</span>,<span class="string">'Age'</span>,<span class="string">'Education'</span>,<span class="string">'Certificate'</span>,<span class="string">'MaritalStatus'</span>,<span class="string">'NumberOfChildren'</span>,</span><br><span class="line"><span class="string">'ChildrenBelow18'</span>,<span class="string">'OfficeType'</span>,<span class="string">'CommutingDistance'</span>,<span class="string">'CommutingHours'</span>,<span class="string">'JoinDate'</span>,<span class="string">'MonthsAtCompany'</span>,</span><br><span class="line"><span class="string">'TotalWorkingMonths'</span>,<span class="string">'ExitFlag'</span>,<span class="string">'ReEntry'</span>,<span class="string">'ExitDate'</span>,<span class="string">'LeaveFrequency'</span>,<span class="string">'LeaveDays'</span>,<span class="string">'IncomingRating'</span>,</span><br><span class="line"><span class="string">'SalaryIncrease'</span>,<span class="string">'TotalSalaryIncrease'</span>,<span class="string">'DaysFromSalaryChange'</span>,<span class="string">'SalaryChangeFrequency'</span>,<span class="string">'PeerCompensation'</span>,</span><br><span class="line"><span class="string">'DaysFromPromotion'</span>,<span class="string">'PromotionFrequency'</span>,<span class="string">'TotalPromotionFrequency'</span>,<span class="string">'DaysInCurrPosition'</span>,<span class="string">'PositionChangeFrequency'</span>,</span><br><span class="line"><span class="string">'TotalPositionChangeFrequency'</span>,<span class="string">'ManagerChangeFrequency'</span>,<span class="string">'DaysWithCurrManager'</span>,<span class="string">'TeamTurnoverOfManager'</span>,<span class="string">'TeamSizeOfManager'</span>,</span><br><span class="line"><span class="string">'AgeGapWithManager'</span>,<span class="string">'PerformanceOfManager'</span>,<span class="string">'PotentialOfManager'</span>,<span class="string">'PerformanceChangeOfManager'</span>,<span class="string">'GenderOfManager'</span>,<span class="string">'ConstellationOfManager'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-整体查看数据缺失情况"><a href="#1-2-整体查看数据缺失情况" class="headerlink" title="1.2 整体查看数据缺失情况"></a>1.2 整体查看数据缺失情况</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#整体查看数据缺失情况</span></span><br><span class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># msno.matrix(df_result.sample(df_result.shape[0]), figsize=(16, 16), width_ratios=(15, 1)) #矩阵图</span></span><br><span class="line">msno.bar(hr_data.sample(hr_data.shape[<span class="number">0</span>]), figsize=(<span class="number">15</span>, <span class="number">10</span>), )  <span class="comment">#柱状图</span></span><br><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>]   <span class="comment">#这两行用来显示汉字</span></span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="literal">False</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-各字段数据详情"><a href="#1-3-各字段数据详情" class="headerlink" title="1.3 各字段数据详情"></a>1.3 各字段数据详情</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">字段名				行数</span><br><span class="line">EmployeeNumber			6097</span><br><span class="line">BU				6097</span><br><span class="line">BUType				6097</span><br><span class="line">Org				6097</span><br><span class="line">JobLevel			6097</span><br><span class="line">JobClass			6097</span><br><span class="line">JobHierarchy			5354</span><br><span class="line">JobPosition			6097</span><br><span class="line">Gender				6097</span><br><span class="line">Birthday			6097</span><br><span class="line">Age				6097</span><br><span class="line">Education			3151</span><br><span class="line">Certificate			3151</span><br><span class="line">MaritalStatus			6085</span><br><span class="line">NumberOfChildren		3350</span><br><span class="line">ChildrenBelow18			3350</span><br><span class="line">OfficeType			6078</span><br><span class="line">CommutingDistance		4548</span><br><span class="line">CommutingHours			4548</span><br><span class="line">WorkCity			6018</span><br><span class="line">Nation				6097</span><br><span class="line">JoinDate			6097</span><br><span class="line">MonthsAtCompany			6097</span><br><span class="line">TotalWorkingMonths		6079</span><br><span class="line">JobHoppingFrequency		2219</span><br><span class="line">ExitFlag			6097</span><br><span class="line">ReEntry				116</span><br><span class="line">ExitDate			2148</span><br><span class="line">Investment			912</span><br><span class="line">LeaveFrequency			4649</span><br><span class="line">LeaveFrequencyInSixMonths	4649</span><br><span class="line">LeaveFrequencyInThreeMonths	4649</span><br><span class="line">LeaveDays			4649</span><br><span class="line">IncomingRating			6097</span><br><span class="line">SalaryIncrease			6096</span><br><span class="line">TotalSalaryIncrease		4441</span><br><span class="line">DaysFromSalaryChange		6097</span><br><span class="line">SalaryChangeFrequency		6096</span><br><span class="line">PeerCompensation		5354</span><br><span class="line">AwardFrequency			2046</span><br><span class="line">TotalAwardFrequency		2046</span><br><span class="line">DaysFromPromotion		1439</span><br><span class="line">PromotionFrequency		343</span><br><span class="line">TotalPromotionFrequency		1422</span><br><span class="line">DaysInCurrPosition		5094</span><br><span class="line">PositionChangeFrequency		5094</span><br><span class="line">TotalPositionChangeFrequency	5094</span><br><span class="line">ManagerChangeFrequency		6097</span><br><span class="line">DaysWithCurrManager		6097</span><br><span class="line">TeamTurnoverOfManager		6097</span><br><span class="line">TeamSizeOfManager		6097</span><br><span class="line">AgeGapWithManager		6097</span><br><span class="line">PerformanceOfManager		4672</span><br><span class="line">PotentialOfManager		4667</span><br><span class="line">PerformanceChangeOfManager	3260</span><br><span class="line">GenderOfManager			6097</span><br><span class="line">ConstellationOfManager		6097</span><br><span class="line">BirthdayOfManager		6097</span><br><span class="line">AgeOfManager			6097</span><br><span class="line">BaseOfManager			6097</span><br><span class="line">CityOfManager			5917</span><br><span class="line">NationOfManager			6063</span><br><span class="line">IsSameCity			6018</span><br><span class="line">IsSameNation			6063</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>整体情况来看，数据缺失在可接受范围之内，需要对部分字段的缺失值进行填充。</p>
+<h1 id="2-正负样本分布情况分析"><a href="#2-正负样本分布情况分析" class="headerlink" title="2. 正负样本分布情况分析"></a>2. 正负样本分布情况分析</h1><h2 id="2-1-整体正负样本分布"><a href="#2-1-整体正负样本分布" class="headerlink" title="2.1 整体正负样本分布"></a>2.1 整体正负样本分布</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flg_0=len(hr_data_fnl[hr_data_fnl[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>])/len(hr_data_fnl[<span class="string">'ExitFlag'</span>])</span><br><span class="line">flg_1=len(hr_data_fnl[hr_data_fnl[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>])/len(hr_data_fnl[<span class="string">'ExitFlag'</span>])</span><br><span class="line">print(<span class="string">'负样本数量:'</span>,len(hr_data_fnl[hr_data_fnl[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'正样本数量:'</span>,len(hr_data_fnl[hr_data_fnl[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">edu=(flg_0,flg_1)</span><br><span class="line">labels=(<span class="string">'负样本'</span>,<span class="string">'正样本'</span>)</span><br><span class="line">color=[<span class="string">'pink'</span>,<span class="string">'brown'</span>]</span><br><span class="line">explode=[<span class="number">0</span>,<span class="number">0.1</span>]</span><br><span class="line">plt.pie(x=edu,labels=labels,autopct=<span class="string">'%.1f%%'</span>,explode=explode,colors=color,</span><br><span class="line">wedgeprops=&#123;<span class="string">'linewidth'</span>:<span class="number">1.5</span>,<span class="string">'edgecolor'</span>:<span class="string">'black'</span>&#125;,</span><br><span class="line">textprops=&#123;<span class="string">'fontsize'</span>:<span class="number">10</span>,<span class="string">'color'</span>:<span class="string">'black'</span>&#125;)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'样本分布情况'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>负样本数量3949，占比64.8%；正样本数量2148，占比35.2%。</p>
+<h2 id="2-2-蓝领正负样本分布"><a href="#2-2-蓝领正负样本分布" class="headerlink" title="2.2 蓝领正负样本分布"></a>2.2 蓝领正负样本分布</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flg_0=len(hr_data_fnl_bule[hr_data_fnl_bule[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>])/len(hr_data_fnl_bule[<span class="string">'ExitFlag'</span>])</span><br><span class="line">flg_1=len(hr_data_fnl_bule[hr_data_fnl_bule[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>])/len(hr_data_fnl_bule[<span class="string">'ExitFlag'</span>])</span><br><span class="line">print(<span class="string">'负样本数量:'</span>,len(hr_data_fnl_bule[hr_data_fnl_bule[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'正样本数量:'</span>,len(hr_data_fnl_bule[hr_data_fnl_bule[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">edu=(flg_0,flg_1)</span><br><span class="line">labels=(<span class="string">'负样本'</span>,<span class="string">'正样本'</span>)</span><br><span class="line">color=[<span class="string">'pink'</span>,<span class="string">'brown'</span>]</span><br><span class="line">explode=[<span class="number">0</span>,<span class="number">0.1</span>]</span><br><span class="line">plt.pie(x=edu,labels=labels,autopct=<span class="string">'%.1f%%'</span>,explode=explode,colors=color,</span><br><span class="line">wedgeprops=&#123;<span class="string">'linewidth'</span>:<span class="number">1.5</span>,<span class="string">'edgecolor'</span>:<span class="string">'black'</span>&#125;,</span><br><span class="line">textprops=&#123;<span class="string">'fontsize'</span>:<span class="number">10</span>,<span class="string">'color'</span>:<span class="string">'black'</span>&#125;)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'样本分布情况'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>负样本数量958，占比51.3%；正样本数量908，占比48.7%。</p>
+<h2 id="2-3-非蓝领正负样本分布"><a href="#2-3-非蓝领正负样本分布" class="headerlink" title="2.3 非蓝领正负样本分布"></a>2.3 非蓝领正负样本分布</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flg_0=len(hr_data_fnl_while[hr_data_fnl_while[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>])/len(hr_data_fnl_while[<span class="string">'ExitFlag'</span>])</span><br><span class="line">flg_1=len(hr_data_fnl_while[hr_data_fnl_while[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>])/len(hr_data_fnl_while[<span class="string">'ExitFlag'</span>])</span><br><span class="line">print(<span class="string">'负样本数量:'</span>,len(hr_data_fnl_while[hr_data_fnl_while[<span class="string">'ExitFlag'</span>]==<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'正样本数量:'</span>,len(hr_data_fnl_while[hr_data_fnl_while[<span class="string">'ExitFlag'</span>]==<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">edu=(flg_0,flg_1)</span><br><span class="line">labels=(<span class="string">'负样本'</span>,<span class="string">'正样本'</span>)</span><br><span class="line">color=[<span class="string">'pink'</span>,<span class="string">'brown'</span>]</span><br><span class="line">explode=[<span class="number">0</span>,<span class="number">0.1</span>]</span><br><span class="line">plt.pie(x=edu,labels=labels,autopct=<span class="string">'%.1f%%'</span>,explode=explode,colors=color,</span><br><span class="line">wedgeprops=&#123;<span class="string">'linewidth'</span>:<span class="number">1.5</span>,<span class="string">'edgecolor'</span>:<span class="string">'black'</span>&#125;,</span><br><span class="line">textprops=&#123;<span class="string">'fontsize'</span>:<span class="number">10</span>,<span class="string">'color'</span>:<span class="string">'black'</span>&#125;)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'样本分布情况'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>负样本数量2991，占比70.7%；正样本数量1240，占比29.3%。</p>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>正负样本情况不存在极端情况，正负样本比例相对正常，暂时不需要做采样处理，直接取全体原始数据进行模型预测</p>
+<h1 id="3-数据清洗"><a href="#3-数据清洗" class="headerlink" title="3. 数据清洗"></a>3. 数据清洗</h1><h2 id="3-1-总体原则："><a href="#3-1-总体原则：" class="headerlink" title="3.1 总体原则："></a>3.1 总体原则：</h2><h3 id="常规转换"><a href="#常规转换" class="headerlink" title="常规转换:"></a>常规转换:</h3><ul>
+<li>分类变量：缺失值替换成unknown,并对部分分类变量进行特征定序转换 ;</li>
+<li>连续变量：缺失填充0,均值,中位数、众数等等；</li>
+</ul>
+<h3 id="特殊转换"><a href="#特殊转换" class="headerlink" title="特殊转换:"></a>特殊转换:</h3><ul>
+<li><code>CommutingDistance/CommutingHours</code> 缺失情况处理：1. 办公方式为Office的填充均值，2. 办公方式为Remote/Unknown的填充0；</li>
+<li><code>Education/Certificate</code> 合并成一个字段<code>EC</code> ，因为学历有高低之分,所以对10种类别进行定序转换，值分别为0,1,2,3,4,5,6,7,8,9；</li>
+<li><code>TotalWorkingMonths</code> 社会工龄缺失值，暂定用公司工龄<code>MonthsAtCompany</code> 值填充；</li>
+<li><code>TotalWorkingMonths</code> 发现异常值，社会工龄/12&gt;年龄-14，要进行平滑处理(异常值暂定用<code>MonthsAtCompany</code> 值填充)；</li>
+<li><code>JobLevel</code> (职级)，把<code>JobLevel</code> 值为&lt;7(一共4条)进行特殊处理，这里假设取最大值6，然后把字段转换成int64；</li>
+<li><code>BU</code> 分类变量 转换为量化的<code>BU离职率</code> 连续变量；</li>
+<li><code>BUType</code> 分类变量 转换为量化的<code>BUType离职率</code> 连续变量；</li>
+<li><code>JobPosition</code> 分类变量 转换为量化的<code>JobPosition离职率</code> 连续变量；</li>
+<li><code>MaritalStatus</code> 分类变量 转换为量化的<code>MaritalStatus离职率</code> 连续变量；</li>
+</ul>
+<h2 id="3-2-各字段处理方案"><a href="#3-2-各字段处理方案" class="headerlink" title="3.2 各字段处理方案"></a>3.2 各字段处理方案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">字段名称						处理方法</span><br><span class="line">EmployeeNumber					无缺失</span><br><span class="line">BU						无缺失</span><br><span class="line">BUType						无缺失</span><br><span class="line">Org						无缺失</span><br><span class="line">JobLevel					无缺失</span><br><span class="line">JobClass					无缺失</span><br><span class="line">JobHierarchy					无缺失</span><br><span class="line">JobPosition					无缺失</span><br><span class="line">Gender						无缺失</span><br><span class="line">Birthday					无缺失</span><br><span class="line">Age						无缺失</span><br><span class="line">Education					填充&#39;Unknown&#39;</span><br><span class="line">Certificate					填充&#39;Unknown&#39;</span><br><span class="line">MaritalStatus					填充&#39;Unknown&#39;</span><br><span class="line">NumberOfChildren				缺失填充0</span><br><span class="line">ChildrenBelow18					缺失填充0</span><br><span class="line">OfficeType					填充&#39;Unknown&#39;</span><br><span class="line">CommutingDistance				1.办公方式为Office的填充均值。2.办公方式为Remote&#x2F;Unknown的填充0</span><br><span class="line">CommutingHours					1.办公方式为Office的填充均值。2.办公方式为Remote&#x2F;Unknown的填充0</span><br><span class="line">WorkCity					不处理,暂不用;转换为:IsSameCity主管与员工位于不同城市</span><br><span class="line">Nation						不处理,暂不用;转换为:IsSameNation主管与员工是否同国籍</span><br><span class="line">JoinDate					无缺失</span><br><span class="line">MonthsAtCompany					无缺失</span><br><span class="line">TotalWorkingMonths				分情况</span><br><span class="line">JobHoppingFrequency				缺失填充0</span><br><span class="line">ExitFlag					无缺失</span><br><span class="line">ReEntry						缺失填充False</span><br><span class="line">ExitDate					不填充</span><br><span class="line">Investment					缺失填充0</span><br><span class="line">LeaveFrequency					缺失填充0</span><br><span class="line">LeaveFrequencyInSixMonths			缺失填充0</span><br><span class="line">LeaveFrequencyInThreeMonths			缺失填充0</span><br><span class="line">LeaveDays					缺失填充0</span><br><span class="line">IncomingRating					无缺失</span><br><span class="line">SalaryIncrease					无缺失</span><br><span class="line">TotalSalaryIncrease				缺失填充0</span><br><span class="line">DaysFromSalaryChange				无缺失</span><br><span class="line">SalaryChangeFrequency				无缺失</span><br><span class="line">PeerCompensation				无缺失</span><br><span class="line">AwardFrequency					缺失填充0</span><br><span class="line">TotalAwardFrequency				缺失填充0</span><br><span class="line">DaysFromPromotion				处理如下:日期和缺失的统一填充一个最大值，暂定2200</span><br><span class="line">PromotionFrequency				缺失填充0</span><br><span class="line">TotalPromotionFrequency				缺失填充0</span><br><span class="line">DaysInCurrPosition				缺失填充0</span><br><span class="line">PositionChangeFrequency				缺失填充0</span><br><span class="line">TotalPositionChangeFrequency			缺失填充0</span><br><span class="line">ManagerChangeFrequency				无缺失</span><br><span class="line">DaysWithCurrManager				无缺失</span><br><span class="line">TeamTurnoverOfManager				无缺失</span><br><span class="line">TeamSizeOfManager				无缺失</span><br><span class="line">AgeGapWithManager				填充均值</span><br><span class="line">PerformanceOfManager				填充众数3(缺失严重，可能不用)</span><br><span class="line">PotentialOfManager				填充众数2(缺失严重，可能不用)</span><br><span class="line">PerformanceChangeOfManager			填充&#39;Unknown&#39;(缺失严重，可能不用)</span><br><span class="line">GenderOfManager					填充&#39;Unknown&#39;</span><br><span class="line">ConstellationOfManager				填充&#39;Unknown&#39;</span><br><span class="line">BirthdayOfManager				无缺失</span><br><span class="line">AgeOfManager					无缺失</span><br><span class="line">BaseOfManager					无缺失</span><br><span class="line">CityOfManager					不处理,暂不用;转换为:IsSameCity主管与员工位于不同城市</span><br><span class="line">NationOfManager					不处理,暂不用;转换为:IsSameNation主管与员工是否同国籍</span><br><span class="line">IsSameCity					填充&#39;Unknown&#39;</span><br><span class="line">IsSameNation					填充&#39;Unknown&#39;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-连续变量异常处理"><a href="#4-连续变量异常处理" class="headerlink" title="4. 连续变量异常处理"></a>4. 连续变量异常处理</h1><h2 id="4-1-整体情况分析："><a href="#4-1-整体情况分析：" class="headerlink" title="4.1 整体情况分析："></a>4.1 整体情况分析：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">pd.set_option(<span class="string">'display.max_columns'</span>, <span class="number">1000</span>)</span><br><span class="line">pd.set_option(<span class="string">'display.width'</span>, <span class="number">1000</span>)</span><br><span class="line">pd.set_option(<span class="string">'display.max_colwidth'</span>, <span class="number">1000</span>)</span><br><span class="line">print(hr_data.describe())</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-连续变量异常处理："><a href="#4-2-连续变量异常处理：" class="headerlink" title="4.2 连续变量异常处理："></a>4.2 连续变量异常处理：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.删除异常值:状态为离职，但没有离职时间的(一共有两条)</span></span><br><span class="line"><span class="comment"># hr_data=hr_data.drop(index=(hr_data[(hr_data['ExitFlag']=='离职') &amp; hr_data['ExitDate'].isnull().values==True].index))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.填充缺失值:分类变量:(Education,Certificate,MaritalStatus,OfficeType,PerformanceChangeOfManager,GenderOfManager,ConstellationOfManager 缺失值替换成unknown)</span></span><br><span class="line">hr_data[<span class="string">'Education'</span>] = hr_data[<span class="string">'Education'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'Certificate'</span>] = hr_data[<span class="string">'Certificate'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'MaritalStatus'</span>] = hr_data[<span class="string">'MaritalStatus'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'OfficeType'</span>] = hr_data[<span class="string">'OfficeType'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'PerformanceChangeOfManager'</span>] = hr_data[<span class="string">'PerformanceChangeOfManager'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'GenderOfManager'</span>] = hr_data[<span class="string">'GenderOfManager'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'ConstellationOfManager'</span>] = hr_data[<span class="string">'ConstellationOfManager'</span>].astype(<span class="string">'object'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line"><span class="comment">#同时发现MaritalStatus字段数据值Unknwn不规范，更新为Unknown</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'MaritalStatus'</span>]==<span class="string">'Unknwn'</span>,<span class="string">'MaritalStatus'</span>]=<span class="string">'Unknown'</span></span><br><span class="line"><span class="comment">#20200419新增字段缺失值填充:</span></span><br><span class="line">hr_data[<span class="string">'IsSameCity'</span>] = hr_data[<span class="string">'IsSameCity'</span>].astype(<span class="string">'str'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line">hr_data[<span class="string">'IsSameNation'</span>] = hr_data[<span class="string">'IsSameNation'</span>].astype(<span class="string">'str'</span>).replace(np.nan, <span class="string">'Unknown'</span>).replace(<span class="string">'None'</span>, <span class="string">'Unknown'</span>).replace(<span class="string">'nan'</span>, <span class="string">'Unknown'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.连续变量缺失填充0:(NumberOfChildren,ChildrenBelow18,LeaveFrequency,LeaveDays,TotalSalaryIncrease,SalaryIncrease,PromotionFrequency,TotalPromotionFrequency</span></span><br><span class="line"><span class="comment"># DaysInCurrPosition,PositionChangeFrequency,TotalPositionChangeFrequency)</span></span><br><span class="line">hr_data[<span class="string">'NumberOfChildren'</span>]= hr_data[<span class="string">'NumberOfChildren'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'ChildrenBelow18'</span>]= hr_data[<span class="string">'ChildrenBelow18'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'LeaveFrequency'</span>]= hr_data[<span class="string">'LeaveFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'LeaveDays'</span>]= hr_data[<span class="string">'LeaveDays'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'float64'</span>)</span><br><span class="line">hr_data[<span class="string">'TotalSalaryIncrease'</span>]= hr_data[<span class="string">'TotalSalaryIncrease'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'float64'</span>)</span><br><span class="line">hr_data[<span class="string">'SalaryIncrease'</span>]= hr_data[<span class="string">'SalaryIncrease'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'float64'</span>)</span><br><span class="line">hr_data[<span class="string">'PromotionFrequency'</span>]= hr_data[<span class="string">'PromotionFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'TotalPromotionFrequency'</span>]= hr_data[<span class="string">'TotalPromotionFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'DaysInCurrPosition'</span>]= hr_data[<span class="string">'DaysInCurrPosition'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'PositionChangeFrequency'</span>]= hr_data[<span class="string">'PositionChangeFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'SalaryChangeFrequency'</span>]= hr_data[<span class="string">'SalaryChangeFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'TotalPositionChangeFrequency'</span>]= hr_data[<span class="string">'TotalPositionChangeFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line"><span class="comment">#4.20200419新增字段缺失值填充:</span></span><br><span class="line">hr_data[<span class="string">'JobHoppingFrequency'</span>]= hr_data[<span class="string">'JobHoppingFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'Investment'</span>]= hr_data[<span class="string">'Investment'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'LeaveFrequencyInSixMonths'</span>]= hr_data[<span class="string">'LeaveFrequencyInSixMonths'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'LeaveFrequencyInThreeMonths'</span>]= hr_data[<span class="string">'LeaveFrequencyInThreeMonths'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'AwardFrequency'</span>]= hr_data[<span class="string">'AwardFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'TotalAwardFrequency'</span>]= hr_data[<span class="string">'TotalAwardFrequency'</span>].replace(np.nan, <span class="number">0</span>).replace(<span class="string">'None'</span>, <span class="number">0</span>).replace(<span class="string">'nan'</span>, <span class="number">0</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.缺失值填充False;</span></span><br><span class="line">hr_data[<span class="string">'ReEntry'</span>]=hr_data[<span class="string">'ReEntry'</span>].fillna(<span class="string">'False'</span>).astype(<span class="string">'str'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#6.填充均值AgeGapWithManager</span></span><br><span class="line">hr_data[<span class="string">'AgeGapWithManager'</span>]= hr_data[<span class="string">'AgeGapWithManager'</span>].fillna(round(hr_data[<span class="string">'AgeGapWithManager'</span>].mean())).astype(<span class="string">'int64'</span>)</span><br><span class="line"><span class="comment">#7.众数填充3(缺失情况太严重,考虑删除此特征)</span></span><br><span class="line"><span class="comment"># hr_data.groupby(['PerformanceOfManager']).agg(&#123;'PerformanceOfManager': ['count']&#125;)   #3</span></span><br><span class="line"><span class="comment"># hr_data.groupby(['PotentialOfManager']).agg(&#123;'PotentialOfManager': ['count']&#125;)     #2</span></span><br><span class="line">hr_data[<span class="string">'PerformanceOfManager'</span>]= hr_data[<span class="string">'PerformanceOfManager'</span>].fillna(<span class="number">3</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'PotentialOfManager'</span>]= hr_data[<span class="string">'PotentialOfManager'</span>].fillna(<span class="number">2</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#8.CommutingDistance缺失情况处理:1.办公方式为Office的填充均值。2.办公方式为Remote/Unknown的填充0</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'OfficeType'</span>]==<span class="string">'Office'</span>,<span class="string">'CommutingDistance'</span>]=hr_data[<span class="string">'CommutingDistance'</span>].fillna(hr_data.loc[hr_data[<span class="string">'OfficeType'</span>]==<span class="string">'Office'</span>,<span class="string">'CommutingDistance'</span>].mean())</span><br><span class="line">hr_data[<span class="string">'CommutingDistance'</span>]=hr_data[<span class="string">'CommutingDistance'</span>].fillna(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#CommutingHours缺失情况处理:1.办公方式为Office的填充均值。2.办公方式为Remote/Unknown的填充0</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'OfficeType'</span>]==<span class="string">'Office'</span>,<span class="string">'CommutingHours'</span>]=hr_data[<span class="string">'CommutingHours'</span>].fillna(hr_data.loc[hr_data[<span class="string">'OfficeType'</span>]==<span class="string">'Office'</span>,<span class="string">'CommutingHours'</span>].mean())</span><br><span class="line">hr_data[<span class="string">'CommutingHours'</span>]=hr_data[<span class="string">'CommutingHours'</span>].fillna(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#9.DaysFromPromotion缺失严重，且数据有明显脏数据，处理如下:日期和缺失的统一填充一个最大值，暂定2200</span></span><br><span class="line">hr_data[<span class="string">'DaysFromPromotion_Flag'</span>]=hr_data[<span class="string">'DaysFromPromotion'</span>].str.contains(<span class="string">'/'</span>)   <span class="comment">#1.找出所有包含'/'的异常字段</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'DaysFromPromotion_Flag'</span>]==<span class="literal">True</span>,<span class="string">'DaysFromPromotion'</span>]=<span class="string">'2200'</span>    <span class="comment">#2.填充为最大值2200</span></span><br><span class="line">hr_data[<span class="string">'DaysFromPromotion'</span>]= hr_data[<span class="string">'DaysFromPromotion'</span>].replace(np.nan, <span class="number">2200</span>).replace(<span class="string">'None'</span>, <span class="number">2200</span>).replace(<span class="string">'nan'</span>, <span class="number">2200</span>).astype(<span class="string">'int64'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#10.JobHierarchy缺失值填充:并重新计算PeerCompensation，新特征命名为PeerCompensation_new</span></span><br><span class="line"><span class="comment"># 1.用相同的joblevel的平均JobHierarchy来填充缺失值</span></span><br><span class="line">hr_data[<span class="string">'JobHierarchy'</span>] = hr_data[<span class="string">'JobHierarchy'</span>].fillna(round(hr_data.groupby([<span class="string">'JobLevel'</span>])[<span class="string">'JobHierarchy'</span>].transform(<span class="string">'mean'</span>),<span class="number">0</span>).astype(int))</span><br><span class="line"><span class="comment"># 2.根据更新的JobHierarchy，重新计算PeerCompensation</span></span><br><span class="line">hr_data[<span class="string">'PeerCompensation_new'</span>]=hr_data.groupby([<span class="string">'JobHierarchy'</span>,<span class="string">'JobPosition'</span>])[<span class="string">'SalaryIncrease'</span>].transform(<span class="string">'mean'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="4-3-连续变量异常值的平滑处理"><a href="#4-3-连续变量异常值的平滑处理" class="headerlink" title="4.3 连续变量异常值的平滑处理"></a>4.3 连续变量异常值的平滑处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#平滑处理1，DaysFromSalaryChange(距离上一次调薪的时长)有负数和42445，用均值进行填充</span></span><br><span class="line"><span class="comment"># round(hr_data['DaysFromSalaryChange'].mean())</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'DaysFromSalaryChange'</span>]&lt;<span class="number">0</span>,<span class="string">'DaysFromSalaryChange'</span>]= round(hr_data[<span class="string">'DaysFromSalaryChange'</span>].mean())</span><br><span class="line">hr_data.loc[hr_data[<span class="string">'DaysFromSalaryChange'</span>]&gt;<span class="number">20000</span>,<span class="string">'DaysFromSalaryChange'</span>]= round(hr_data[<span class="string">'DaysFromSalaryChange'</span>].mean())</span><br><span class="line"></span><br><span class="line"><span class="comment">#平滑处理2.JobLevel(职级),把JobLevel值为&lt;7(一共4条)进行特殊处理，这里假设取最大值6,然后把字段转换成int64</span></span><br><span class="line">hr_data.loc[hr_data[<span class="string">'JobLevel'</span>]==<span class="string">'&lt;7'</span>,<span class="string">'JobLevel'</span>]=<span class="number">6</span></span><br><span class="line">hr_data[<span class="string">'JobLevel'</span>]=hr_data[<span class="string">'JobLevel'</span>].astype(<span class="string">'int64'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#平滑处理3</span></span><br><span class="line"><span class="comment">#1.TotalWorkingMonths缺失值，暂定用MonthsAtCompany值填充,  </span></span><br><span class="line"><span class="comment">#2.TotalWorkingMonths发现异常值，社会工龄&gt;年龄-14的，要进行平滑处理(异常值暂定用用MonthsAtCompany值填充)</span></span><br><span class="line">hr_data[<span class="string">'MonthsAtCompany'</span>]=hr_data[<span class="string">'MonthsAtCompany'</span>].astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data[<span class="string">'TotalWorkingMonths'</span>]=hr_data[<span class="string">'TotalWorkingMonths'</span>].replace(np.nan, hr_data[<span class="string">'MonthsAtCompany'</span>]).replace(<span class="string">'None'</span>, hr_data[<span class="string">'MonthsAtCompany'</span>]).replace(<span class="string">'nan'</span>, hr_data[<span class="string">'MonthsAtCompany'</span>]).astype(<span class="string">'int64'</span>)</span><br><span class="line">hr_data.loc[hr_data[<span class="string">'TotalWorkingMonths'</span>]/<span class="number">12</span>+<span class="number">14</span>&gt;hr_data[<span class="string">'Age'</span>],<span class="string">'TotalWorkingMonths'</span>]=hr_data[<span class="string">'MonthsAtCompany'</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-分类变量处理"><a href="#5-分类变量处理" class="headerlink" title="5. 分类变量处理"></a>5. 分类变量处理</h1><h1 id="6-非蓝领特征重要性分析"><a href="#6-非蓝领特征重要性分析" class="headerlink" title="6. 非蓝领特征重要性分析"></a>6. 非蓝领特征重要性分析</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.特征重要性分析:</span></span><br><span class="line"><span class="comment"># print(hr_data_fnl_bule.head())</span></span><br><span class="line"><span class="keyword">from</span> xgboost <span class="keyword">import</span> XGBClassifier</span><br><span class="line"><span class="keyword">from</span> xgboost <span class="keyword">import</span> plot_importance</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot</span><br><span class="line">X_while=hr_data_fnl_while.drop(columns=[<span class="string">'ExitFlag'</span>])</span><br><span class="line">Y_while=hr_data_fnl_while[<span class="string">'ExitFlag'</span>]</span><br><span class="line">X_train2, X_test2, Y_train2, Y_test2 = train_test_split(X_while, Y_while, random_state=<span class="number">233</span>, test_size=<span class="number">0.2</span>)</span><br><span class="line">model_while = XGBClassifier()</span><br><span class="line">model_while.fit(X_train2,Y_train2)</span><br><span class="line">Y_pred2=model_while.predict(X_test2)</span><br><span class="line">feature_importance2=model_while.feature_importances_</span><br><span class="line">features_list2 = X_train2.columns.values</span><br><span class="line"><span class="comment"># print(features_list1)</span></span><br><span class="line"><span class="comment"># print(feature_importance1)</span></span><br><span class="line">fig,ax = plt.subplots(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">plot_importance(model_while,</span><br><span class="line">                height=<span class="number">0.5</span>,</span><br><span class="line">                ax=ax,</span><br><span class="line">                max_num_features=<span class="number">64</span>)</span><br><span class="line">pyplot.show()</span><br></pre></td></tr></table></figure>
+
+<p>特征重要性排名靠前的字段有以下这些：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">字段名称				特征重要性</span><br><span class="line">LeaveDays				92</span><br><span class="line">MonthsAtCompany				82</span><br><span class="line">DaysFromSalaryChange			80</span><br><span class="line">BU_LeaveRate				72</span><br><span class="line">TeamTurnoverOfManager			68</span><br><span class="line">TotalWorkingMonths			30</span><br><span class="line">TotalSalaryIncrease			19</span><br><span class="line">SalaryIncrease				18</span><br><span class="line">AwardFrequency				18</span><br><span class="line">LeaveFrequency				17</span><br><span class="line">IncomingRating				17</span><br><span class="line">DaysWithCurrManager			13</span><br><span class="line">AgeGapWithManager			13</span><br><span class="line">TeamSizeOfManager			12</span><br><span class="line">PeerCompensation			11</span><br><span class="line">DaysInCurrPosition			11</span><br><span class="line">AgeOfManager				11</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%B8%85%E6%B4%97/" rel="tag"># 清洗</a>
+          
+            <a href="/tags/%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" rel="tag"># 特征工程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/09/20200409_meeting_summary/" rel="next" title="20200409会议纪要">
+                <i class="fa fa-chevron-left"></i> 20200409会议纪要
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/30/20200428_meeting_summary/" rel="prev" title="20200428会议纪要">
+                20200428会议纪要 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">chrisfang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-原始数据集及缺失分析"><span class="nav-number">1.</span> <span class="nav-text">1. 原始数据集及缺失分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-导入数据"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 导入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-整体查看数据缺失情况"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 整体查看数据缺失情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-各字段数据详情"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 各字段数据详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-正负样本分布情况分析"><span class="nav-number">2.</span> <span class="nav-text">2. 正负样本分布情况分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-整体正负样本分布"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 整体正负样本分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-蓝领正负样本分布"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 蓝领正负样本分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-非蓝领正负样本分布"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 非蓝领正负样本分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结-1"><span class="nav-number">2.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-数据清洗"><span class="nav-number">3.</span> <span class="nav-text">3. 数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-总体原则："><span class="nav-number">3.1.</span> <span class="nav-text">3.1 总体原则：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常规转换"><span class="nav-number">3.1.1.</span> <span class="nav-text">常规转换:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊转换"><span class="nav-number">3.1.2.</span> <span class="nav-text">特殊转换:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-各字段处理方案"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 各字段处理方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-连续变量异常处理"><span class="nav-number">4.</span> <span class="nav-text">4. 连续变量异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-整体情况分析："><span class="nav-number">4.1.</span> <span class="nav-text">4.1 整体情况分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-连续变量异常处理："><span class="nav-number">4.2.</span> <span class="nav-text">4.2 连续变量异常处理：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-连续变量异常值的平滑处理"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 连续变量异常值的平滑处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-分类变量处理"><span class="nav-number">5.</span> <span class="nav-text">5. 分类变量处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-非蓝领特征重要性分析"><span class="nav-number">6.</span> <span class="nav-text">6. 非蓝领特征重要性分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chrisfang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+<div class=BbeiAn-info">
+	浙ICP备 -
+	<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="noopener">15006651号</a>
+	</a>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
